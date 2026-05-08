@@ -1,0 +1,38 @@
+body {
+    font-family: Arial;
+    margin: 20px;
+}
+
+#listaArchivos li {
+    margin: 5px 0;
+}
+
+#listaArchivos a {
+    cursor: pointer;
+    color: blue;
+    text-decoration: underline;
+}
+
+#visor {
+    border: 1px solid #ccc;
+    padding: 10px;
+    min-height: 100px;
+    background: #f9f9f9;
+}
+
+textarea {
+    width: 400px;
+}
+
+input, textarea {
+    margin: 5px 0;
+}
+
+button {
+    margin-top: 10px;
+    padding: 5px 10px;
+}
+
+#mensajeCrear {
+    color: green;
+}

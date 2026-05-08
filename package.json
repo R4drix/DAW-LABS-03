@@ -1,5 +1,5 @@
 {
-  "name": "labs-03",
+  "name": "lab04-ajax-node",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -11,9 +11,16 @@
   "license": "ISC",
   "type": "commonjs",
   "dependencies": {
-    "body-parser": "^2.2.2",
-    "cors": "^2.8.6",
     "express": "^5.2.1",
-    "markdown-it": "^14.1.1"
-  }
+    "marked": "^18.0.3"
+  },
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/R4drix/DAW-LABS-03.git"
+  },
+  "bugs": {
+    "url": "https://github.com/R4drix/DAW-LABS-03/issues"
+  },
+  "homepage": "https://github.com/R4drix/DAW-LABS-03#readme"
 }

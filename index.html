@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8"/>
+  <title>Visor Markdown</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+
+  <h2>Archivos</h2>
+  <ul id="listaArchivos"></ul>
+
+  <h2>Contenido</h2>
+  <div id="visor">Selecciona un archivo</div>
+
+  <h2>Crear archivo</h2>
+
+  <input id="campoNombre" placeholder="archivo.md"><br>
+  <textarea id="campoContenido" rows="6" placeholder="contenido..."></textarea><br>
+
+  <button onclick="crearArchivo()">Guardar</button>
+
+  <p id="mensajeCrear"></p>
+
+<script>
+  var URL_BASE = '/DAW-LABS-03/backend';
+
+  function cargarArchivos() {
+    fetch(URL_BASE + '/files')
+      .then(r => r.json())
+      .then(function (datos) {
+
+        var lista = document.getElementById('listaArchivos');
+        lista.innerHTML = '';
+
+        for (var i = 0; i < datos.archivos.length; i++) {
+          agregarArchivo(datos.archivos[i]);
+        }
+
+      });
+  }
+
+  function agregarArchivo(nombre) {
+    var li = document.createElement('li');
+    var a = document.createElement('a');
+
+    a.textContent = nombre;
+
+    a.onclick = function () {
+      verArchivo(nombre);
+    };
+
+    li.appendChild(a);
+    document.getElementById('listaArchivos').appendChild(li);
+  }
+
+  function verArchivo(nombre) {
+    fetch(URL_BASE + '/file?nombre=' + encodeURIComponent(nombre))
+      .then(r => r.json())
+      .then(function (datos) {
+        document.getElementById('visor').innerHTML = datos.html;
+      });
+  }
+
+  function crearArchivo() {
+    var nombre = document.getElementById('campoNombre').value.trim();
+    var contenido = document.getElementById('campoContenido').value.trim();
+
+    if (!nombre || !contenido) {
+      document.getElementById('mensajeCrear').innerHTML = 'Completa todo';
+      return;
+    }
+
+    if (nombre.indexOf('.md') === -1) {
+      nombre += '.md';
+    }
+
+    fetch(URL_BASE + '/file', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        nombre: nombre,
+        contenido: contenido
+      })
+    })
+    .then(r => r.json())
+    .then(function (resp) {
+      document.getElementById('mensajeCrear').innerHTML = resp.mensaje;
+
+      document.getElementById('campoNombre').value = '';
+      document.getElementById('campoContenido').value = '';
+
+      cargarArchivos();
+    });
+  }
+
+
+  cargarArchivos();
+</script>
+
+</body>
+</html>
